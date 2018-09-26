@@ -54,7 +54,7 @@ public final class RingConsistentHash<N extends Node> {
               new VirtualNode<N>(physicalNode, iter + existingVirtualNodeCount);
           long hash = hashFunction.hash(virtualNode.getKey());
           ring.put(hash, virtualNode);
-          logger.info(String.format("  Inserted %s at hash %d", virtualNode, hash));
+          logger.debug(String.format("  Inserted %s at hash %d", virtualNode, hash));
           added = true; // overwrite away
         }
       } finally {
@@ -70,7 +70,7 @@ public final class RingConsistentHash<N extends Node> {
    */
   public boolean removeNode(final N physicalNode) {
     boolean removed = false;
-    logger.info(String.format("Dropping %s", physicalNode));
+    logger.info(String.format("Dropping %s and all its virtual nodes", physicalNode));
     // this is silly, we can easily do better
     if (writeLock.tryLock()) {
       try {
@@ -80,7 +80,7 @@ public final class RingConsistentHash<N extends Node> {
           final VirtualNode<N> virtualNode = ring.get(key);
           if (virtualNode.isVirtualNodeOf(physicalNode)) {
             iterator.remove();
-            logger.info(String.format("  Removed %s", virtualNode));
+            logger.debug(String.format("  Removed %s", virtualNode));
             removed = true; // overwrite away
           }
         }
