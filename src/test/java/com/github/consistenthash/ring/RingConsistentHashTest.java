@@ -29,7 +29,7 @@ public class RingConsistentHashTest {
   @Test
   public void testRingConsistentHash() {
     int physicalNodeCount = 5;
-    int virtualNodeCount = 5;
+    int virtualNodeCount = 50;
 
     // hydrate the ring later
     final RingConsistentHash<PhysicalNode> consistentHash = new RingConsistentHash<>(new MD5HashFunction());
