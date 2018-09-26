@@ -30,6 +30,11 @@ public final class RingConsistentHash<N extends Node> {
   private final WriteLock writeLock = superLock.writeLock();
   private final ReadLock readLock = superLock.readLock();
 
+  /**
+   * Seed the ring with a "good" hash function. The definition of what's good depends on what you
+   * are trying to do and is domain specific but we strive for a balance between an instantaneous
+   * (blazing fast), pure hash function.
+   */
   public RingConsistentHash(final HashFunction hashFunction) {
     this.hashFunction = hashFunction;
   }
@@ -37,6 +42,10 @@ public final class RingConsistentHash<N extends Node> {
   /**
    * Insert a physical node into the hash ring - this will essentially hydrate the ring with
    * virtualNodeCount number of virtual nodes associated with the provided physical node.
+   * 
+   * Typically, in order to lower the standard deviation from mean of the spread of keys around the
+   * ring, pick a good hash function (fast, does not easily collide, mixes well) plus a sufficiently
+   * large virtualNodeCount value.
    */
   public boolean addNode(final N physicalNode, final int virtualNodeCount) {
     boolean added = false;
@@ -66,7 +75,11 @@ public final class RingConsistentHash<N extends Node> {
 
   /**
    * Drop the physical node from the ring - this will drop all its associated virtual nodes from the
-   * hash ring.
+   * hash ring. As expected, this will result in a small percentage of existing keys "moving to" or
+   * hashing to the remaining nodes in the ring.
+   * 
+   * A key goal of consistent hashing is to minimize this percentage on ring membership changes via
+   * removeNode() or addNode()
    */
   public boolean removeNode(final N physicalNode) {
     boolean removed = false;
@@ -92,7 +105,13 @@ public final class RingConsistentHash<N extends Node> {
   }
 
   /**
-   * Choose a node in the ring to store the value keyed by the provided key.
+   * Choose a node in the ring to store the value keyed by the provided key. Note that this, along
+   * with other functions for ring based consistent hashing can purely be computed on client side of
+   * a set of storage servers virtually represented by the ring of servers as seen by the clients.
+   * 
+   * The idea is to pick a node on the client side and then independently deal with the storage of
+   * the key on that server. Storage is a concern completely disjoint with the server selection
+   * algorithm.
    */
   public N chooseNode(final String key) {
     N node = null;
@@ -101,16 +120,17 @@ public final class RingConsistentHash<N extends Node> {
         if (ring.isEmpty()) {
           return node;
         }
-        // a. compute hash
+        // a. compute incoming key's hash
         final Long hash = hashFunction.hash(key);
 
-        // b. look for all nodes with hashValue >= hash
+        // b. look for all virtual nodes with hashValue >= hash
         final SortedMap<Long, VirtualNode<N>> tailMap = ring.tailMap(hash);
 
-        // c. for wrap-around case, pick the first hash (lowest hash) from the ring
+        // c. if not empty, select the hash for the first virtual node. Else, for wrap-around case,
+        // pick the first hash (lowest hash value) from the ring
         final Long nodeHash = !tailMap.isEmpty() ? tailMap.firstKey() : ring.firstKey();
 
-        // d. lookup physical node
+        // d. lookup hash->virtualNode->physicalNode
         node = ring.get(nodeHash).getPhysicalNode();
       } finally {
         readLock.unlock();

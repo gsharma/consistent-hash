@@ -4,7 +4,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * MD5 hash implementation.
+ * MD5 hash implementation. Note that this is a rather slow choice of hash function for consistent
+ * hashing at scale.
  * 
  * @author gaurav
  */

@@ -110,7 +110,7 @@ public class RingConsistentHashTest {
     StringBuilder builder = new StringBuilder(
         String.format("%d keys hashed to %d servers::", keysToHash, physicalNodeToKeys.size()));
     for (Map.Entry<PhysicalNode, Integer> entry : physicalNodeToKeys.entrySet()) {
-      builder.append("\n[").append(entry.getKey().getKey()).append("::").append(entry.getValue())
+      builder.append("\n\t[").append(entry.getKey().getKey()).append("::").append(entry.getValue())
           .append("]");
     }
     logger.info(builder.toString());
@@ -153,7 +153,7 @@ public class RingConsistentHashTest {
     builder = new StringBuilder(String.format("%d keys hashed to %d servers::", keysToHash,
         physicalNodeToKeysAfter.size()));
     for (Map.Entry<PhysicalNode, Integer> entry : physicalNodeToKeysAfter.entrySet()) {
-      builder.append("\n[").append(entry.getKey().getKey()).append("::").append(entry.getValue())
+      builder.append("\n\t[").append(entry.getKey().getKey()).append("::").append(entry.getValue())
           .append("]");
     }
     logger.info(builder.toString());
@@ -167,7 +167,7 @@ public class RingConsistentHashTest {
     builder = new StringBuilder(String.format("%% keys moved after going from %d->%d servers::",
         physicalNodeToKeys.size(), physicalNodeToKeysAfter.size()));
     for (Map.Entry<PhysicalNode, Integer> entry : physicalNodeToKeysAfter.entrySet()) {
-      builder.append("\n[").append(entry.getKey().getKey()).append("::");
+      builder.append("\n\t[").append(entry.getKey().getKey()).append("::");
       if (physicalNodeToKeys.containsKey(entry.getKey())) {
         builder
             .append(percentageKeysMoved(physicalNodeToKeys.get(entry.getKey()), entry.getValue()));
