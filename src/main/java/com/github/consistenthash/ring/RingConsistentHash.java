@@ -17,6 +17,17 @@ import com.github.consistenthash.hasher.HashFunction;
 /**
  * A ring based consistent hash.
  * 
+ * Guidelines:<br>
+ * 1. Replicate nodes as virtual nodes to improve key distribution<br>
+ * 2. Consider using a red-black tree<br>
+ * 3. Don't worry about read misses, just re-hydrate from client->server<br>
+ * 4. Keep application on client, don't apply to storage stratum<br>
+ * 5. Tunables:<br>
+ * a) virtual node count (can also vary by node size to change node weight in the ring)<br>
+ * b) choice of hashing algorithm (fast and perfect, as much as possible)<br>
+ * 
+ * There exist many open questions one of which is efficient hot node handling.
+ * 
  * @author gaurav
  */
 public final class RingConsistentHash<N extends Node> {
