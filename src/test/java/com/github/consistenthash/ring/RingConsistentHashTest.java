@@ -80,8 +80,8 @@ public class RingConsistentHashTest {
   public void testRingHashMembershipChanges() {
     // 1a. Initial ring setup
     int physicalNodeCount = 20;
-    int virtualNodeCount = 500;
-    int keysToHash = 400_000;
+    int virtualNodeCount = 100;
+    int keysToHash = 100_000;
 
     // hydrate the ring later
     final RingConsistentHash<PhysicalNode> consistentHash =
