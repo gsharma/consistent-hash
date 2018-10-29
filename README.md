@@ -1,3 +1,6 @@
+[![Build Status](https://img.shields.io/travis/gsharma/consistent-hash/master.svg)](https://travis-ci.org/gsharma/consistent-hash)
+[![Test Coverage](https://img.shields.io/codecov/c/github/gsharma/consistent-hash/master.svg)](https://codecov.io/github/gsharma/consistent-hash?branch=master)
+
 # Consistent Hashing
 
 Description coming soon
