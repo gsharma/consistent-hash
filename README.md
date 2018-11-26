@@ -1,5 +1,6 @@
 [![Build Status](https://img.shields.io/travis/gsharma/consistent-hash/master.svg)](https://travis-ci.org/gsharma/consistent-hash)
 [![Test Coverage](https://img.shields.io/codecov/c/github/gsharma/consistent-hash/master.svg)](https://codecov.io/github/gsharma/consistent-hash?branch=master)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=com.github.consistenthash:consistenthash&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.github.consistenthash:consistenthash)
 [![Licence](https://img.shields.io/hexpm/l/plug.svg)](https://github.com/gsharma/consistent-hash/blob/master/LICENSE)
 
 # Consistent Hashing
