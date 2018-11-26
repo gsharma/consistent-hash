@@ -42,3 +42,12 @@ https://ai.google/research/pubs/pub44824 (section 3.4)
 10. Consider improvements afforded by HRW / Rendezvous Hashing.
 11. Is support for CAS operations needed?
 
+## Consistent Hashing as a library
+Add mvn dependency:
+```xml
+<dependency>
+  <groupId>com.github.consistenthash</groupId>
+  <artifactId>consistenthash</artifactId>
+  <version>1.0-SNAPSHOT</version>
+</dependency>
+```
