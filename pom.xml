@@ -11,7 +11,7 @@
   <properties>
     <github.global.server>github</github.global.server>
     <github.user.name>gsharma</github.user.name>
-    <github.repo.name>consitent-hash</github.repo.name>
+    <github.repo.name>consistent-hash</github.repo.name>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <junit.version>4.12</junit.version>
     <log4j.version>2.11.1</log4j.version>
