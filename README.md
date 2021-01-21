@@ -5,7 +5,6 @@
 
 # Consistent Hashing
 
-Description coming soon - this project is WIP.
 
 Karger et al. introduced the concept of consistent hashing and gave an algorithm to implement it. Consistent hashing specifies a distribution of data among servers in such a way that servers can be added or removed without having to totally reorganize the data. It was originally proposed for web caching on the Internet, in order to address the problem that clients may not be aware of the entire set of cache servers.
 
